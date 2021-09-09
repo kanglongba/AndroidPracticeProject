@@ -10,6 +10,12 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AndroidPracticeProject">
         <activity
+                android:name=".ToSharedActivity"
+                android:exported="true" />
+        <activity
+                android:name=".FromSharedActivity"
+                android:exported="true" />
+        <activity
                 android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>

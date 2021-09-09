@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/lufei"
+            android:id="@+id/avatar"
+            android:layout_marginEnd="10dp" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:text="路飞"
+            android:textColor="@color/white"
+            android:layout_above="@id/company"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="30sp" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/company"
+            android:layout_above="@id/profession"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="腾讯"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profession"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="船长"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+</RelativeLayout>
