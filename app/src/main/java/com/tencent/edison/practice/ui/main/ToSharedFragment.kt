@@ -1,6 +1,8 @@
 package com.tencent.edison.practice.ui.main
 
 import android.os.Bundle
+import android.transition.Transition
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,11 @@ class ToSharedFragment : Fragment() {
         ToSharedListAdapter(mutableListOf())
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addTransitionListener()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +48,37 @@ class ToSharedFragment : Fragment() {
         viewModel.getUserModel().observe(viewLifecycleOwner, Observer {
             adapter.putUserData(it)
             listView.scrollToPosition(adapter.getPositionByUserId(userId))
+        })
+    }
+
+    /**
+     * 5.添加共享元素动画监听器。
+     *
+     */
+    fun addTransitionListener() {
+        val transition: Transition = requireActivity().window.sharedElementEnterTransition
+        transition.addListener(object : Transition.TransitionListener {
+            override fun onTransitionStart(p0: Transition?) {
+                Log.d("edison", "onTransitionStart")
+            }
+
+            override fun onTransitionEnd(p0: Transition?) {
+                Log.d("edison", "onTransitionEnd")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionCancel(p0: Transition?) {
+                Log.d("edison", "onTransitionCancel")
+            }
+
+            override fun onTransitionPause(p0: Transition?) {
+                Log.d("edison", "onTransitionPause")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionResume(p0: Transition?) {
+                Log.d("edison", "onTransitionResume")
+            }
         })
     }
 }

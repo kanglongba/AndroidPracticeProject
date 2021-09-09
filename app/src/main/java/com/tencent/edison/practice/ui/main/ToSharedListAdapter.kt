@@ -24,6 +24,8 @@ class ToSharedListAdapter(var userList: MutableList<UserContact>) :
 
     override fun onBindViewHolder(holder: SharedViewHolder, position: Int) {
         holder.bindData(userList[position])
+        //4.设置共享元素Id。需与第2步设置的共享元素id相同。
+        holder.setTransitionName(userList[position])
     }
 
     override fun getItemCount(): Int {

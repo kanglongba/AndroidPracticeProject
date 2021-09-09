@@ -3,6 +3,7 @@ package com.tencent.edison.practice.ui.main
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tencent.edison.practice.R
 import com.tencent.edison.practice.model.UserContact
@@ -17,6 +18,7 @@ class SharedViewHolder(private val item: View) : RecyclerView.ViewHolder(item) {
 
     companion object {
         const val KEY_USER_ID = "userId"
+        const val SHARED_AVATAR = "shareAvatar"
     }
 
     lateinit var avatar: ImageView
@@ -40,5 +42,9 @@ class SharedViewHolder(private val item: View) : RecyclerView.ViewHolder(item) {
         name.text = user.name
         company.text = user.company
         profession.text = user.profession
+    }
+
+    fun setTransitionName(user: UserContact) {
+        ViewCompat.setTransitionName(avatar, SHARED_AVATAR + user.id)
     }
 }

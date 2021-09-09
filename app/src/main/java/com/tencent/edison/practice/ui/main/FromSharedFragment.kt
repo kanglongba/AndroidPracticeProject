@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,11 +35,19 @@ class FromSharedFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(activity, ToSharedActivity::class.java)
+                    val userId = viewModel.getUserModel().value?.get(post)?.id ?: 101
                     intent.putExtra(
                         SharedViewHolder.KEY_USER_ID,
-                        viewModel.getUserModel().value?.get(post)?.id ?: 101
+                        userId
                     )
-                    startActivity(intent)
+                    //2.设置共享元素
+                    val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity!!,
+                        holder.avatar,
+                        "${SharedViewHolder.SHARED_AVATAR}$userId"
+                    )
+                    //3.跳转Activity
+                    ActivityCompat.startActivity(activity!!, intent, activityOptions.toBundle())
                 }
             }
         }
