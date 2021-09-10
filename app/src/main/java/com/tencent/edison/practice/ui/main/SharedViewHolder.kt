@@ -3,7 +3,6 @@ package com.tencent.edison.practice.ui.main
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tencent.edison.practice.R
 import com.tencent.edison.practice.model.UserContact
@@ -45,6 +44,6 @@ class SharedViewHolder(private val item: View) : RecyclerView.ViewHolder(item) {
     }
 
     fun setTransitionName(user: UserContact) {
-        ViewCompat.setTransitionName(avatar, SHARED_AVATAR + user.id)
+        avatar.transitionName = SHARED_AVATAR + user.id
     }
 }
