@@ -1,10 +1,10 @@
-package com.tencent.edison.practice.ui.main
+package com.tencent.edison.practice.transition.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tencent.edison.practice.R
-import com.tencent.edison.practice.model.UserContact
+import com.tencent.edison.practice.transition.model.UserContact
 
 class ShareViewModel : ViewModel() {
 

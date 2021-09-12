@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.tencent.edison.practice.transition.ui.FromSharedActivity
 
 class MainActivity : AppCompatActivity() {
 

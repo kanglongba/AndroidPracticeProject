@@ -1,4 +1,4 @@
-package com.tencent.edison.practice.model
+package com.tencent.edison.practice.transition.model
 
 /**
  * author: qonyqian

@@ -1,4 +1,4 @@
-package com.tencent.edison.practice
+package com.tencent.edison.practice.transition.ui
 
 import android.os.Bundle
 import android.transition.ChangeBounds
@@ -6,7 +6,7 @@ import android.transition.Slide
 import android.view.Gravity
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import com.tencent.edison.practice.ui.main.ToSharedFragment
+import com.tencent.edison.practice.R
 
 class ToSharedActivity : AppCompatActivity() {
 

@@ -1,11 +1,11 @@
-package com.tencent.edison.practice.ui.main
+package com.tencent.edison.practice.transition.ui
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tencent.edison.practice.R
-import com.tencent.edison.practice.model.UserContact
+import com.tencent.edison.practice.transition.model.UserContact
 
 /**
  * author: qonyqian

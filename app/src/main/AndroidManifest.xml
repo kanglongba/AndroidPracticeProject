@@ -10,10 +10,10 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AndroidPracticeProject">
         <activity
-                android:name=".ToSharedActivity"
+                android:name=".transition.ui.ToSharedActivity"
                 android:exported="true" />
         <activity
-                android:name=".FromSharedActivity"
+                android:name=".transition.ui.FromSharedActivity"
                 android:exported="true" />
         <activity
                 android:name=".MainActivity"
