@@ -22,6 +22,9 @@ class ToSharedActivity : AppCompatActivity() {
         window.returnTransition = Slide(Gravity.RIGHT)
         //设置共享元素动画
         window.sharedElementEnterTransition = ChangeBounds().setDuration(200)
+        window.sharedElementExitTransition = ChangeBounds().setDuration(200)
+        window.sharedElementReenterTransition = ChangeBounds().setDuration(200)
+        window.sharedElementReturnTransition = ChangeBounds().setDuration(200)
 
         //设置不允许动画重叠
         window.allowEnterTransitionOverlap = false

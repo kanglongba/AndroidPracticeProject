@@ -26,7 +26,7 @@ class FromSharedListAdapter(var userList: MutableList<UserContact>) :
 
     override fun onBindViewHolder(holder: SharedViewHolder, position: Int) {
         holder.bindData(userList[position])
-        //2.设置共享元素id。貌似From页面不设置也可以生效，但是为了避免为题，仍然设置上，且与To页面id相同。
+        //2.设置共享元素id。貌似From页面不设置也可以生效，但是为了避免问题，仍然设置上，且与To页面id相同。
         holder.setTransitionName(userList[position])
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(position, holder)

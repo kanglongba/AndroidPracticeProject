@@ -1,6 +1,11 @@
 package com.tencent.edison.practice.transition.ui
 
+import android.app.SharedElementCallback
+import android.content.Context
+import android.graphics.Matrix
+import android.graphics.RectF
 import android.os.Bundle
+import android.os.Parcelable
 import android.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +35,10 @@ class ToSharedFragment : Fragment() {
         super.onCreate(savedInstanceState)
         addEnterTransitionListener()
         addExitTransitionListener()
+        addReEnterTransitionListener()
+        addReturnTransitionListener()
+        addEnterSharedElementCallback()
+        addExitSharedElementCallback()
         //6.如果跳转过来时，共享元素还没有渲染好，就不会有动画效果。这时可以使用postponeEnterTransition方法
         //暂停动画，等共享元素渲染好，再开启动画。因为本例的共享元素动画是设置在Activity上的，所以暂停也要
         //用Activity的方法，否则无效。
@@ -64,7 +73,8 @@ class ToSharedFragment : Fragment() {
 
     /**
      * 5.添加共享元素动画监听器。
-     *
+     * 经过试验表明，只有这个监听能确保每次都调用。其余的那些监听（尤其是FromSharedActivity页面的）均不能
+     * 保证调用，有的甚至一次都没调用。
      */
     fun addEnterTransitionListener() {
         val transition: Transition = requireActivity().window.sharedElementEnterTransition
@@ -120,6 +130,200 @@ class ToSharedFragment : Fragment() {
 
             override fun onTransitionResume(p0: Transition?) {
                 Log.d("edison.to", "Exit onTransitionResume")
+            }
+        })
+    }
+
+    /**
+     * 5.添加共享元素动画监听器。
+     *
+     */
+    fun addReEnterTransitionListener() {
+        val transition: Transition = requireActivity().window.sharedElementReenterTransition
+        transition.addListener(object : Transition.TransitionListener {
+            override fun onTransitionStart(p0: Transition?) {
+                Log.d("edison.to", "ReEnter onTransitionStart")
+            }
+
+            override fun onTransitionEnd(p0: Transition?) {
+                Log.d("edison.to", "ReEnter onTransitionEnd")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionCancel(p0: Transition?) {
+                Log.d("edison.to", "ReEnter onTransitionCancel")
+            }
+
+            override fun onTransitionPause(p0: Transition?) {
+                Log.d("edison.to", "ReEnter onTransitionPause")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionResume(p0: Transition?) {
+                Log.d("edison.to", "ReEnter onTransitionResume")
+            }
+        })
+    }
+
+    /**
+     * 5.添加共享元素动画监听器。
+     *
+     */
+    fun addReturnTransitionListener() {
+        val transition: Transition = requireActivity().window.sharedElementReturnTransition
+        transition.addListener(object : Transition.TransitionListener {
+            override fun onTransitionStart(p0: Transition?) {
+                Log.d("edison.to", "Return onTransitionStart")
+            }
+
+            override fun onTransitionEnd(p0: Transition?) {
+                Log.d("edison.to", "Return onTransitionEnd")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionCancel(p0: Transition?) {
+                Log.d("edison.to", "Return onTransitionCancel")
+            }
+
+            override fun onTransitionPause(p0: Transition?) {
+                Log.d("edison.to", "Return onTransitionPause")
+                transition.removeListener(this)
+            }
+
+            override fun onTransitionResume(p0: Transition?) {
+                Log.d("edison.to", "Return onTransitionResume")
+            }
+        })
+    }
+
+    fun addEnterSharedElementCallback() {
+        requireActivity().setEnterSharedElementCallback(object : SharedElementCallback() {
+            override fun onSharedElementStart(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                super.onSharedElementStart(
+                    sharedElementNames,
+                    sharedElements,
+                    sharedElementSnapshots
+                )
+                Log.d("edison.to", "enter onSharedElementStart")
+            }
+
+            override fun onSharedElementEnd(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+                Log.d("edison.to", "enter onSharedElementEnd")
+            }
+
+            override fun onRejectSharedElements(rejectedSharedElements: MutableList<View>?) {
+                super.onRejectSharedElements(rejectedSharedElements)
+                Log.d("edison.to", "enter onRejectSharedElements")
+            }
+
+            override fun onMapSharedElements(
+                names: MutableList<String>?,
+                sharedElements: MutableMap<String, View>?
+            ) {
+                super.onMapSharedElements(names, sharedElements)
+                Log.d("edison.to", "enter onMapSharedElements")
+            }
+
+            override fun onCaptureSharedElementSnapshot(
+                sharedElement: View?,
+                viewToGlobalMatrix: Matrix?,
+                screenBounds: RectF?
+            ): Parcelable {
+                Log.d("edison.to", "enter onCaptureSharedElementSnapshot")
+                return super.onCaptureSharedElementSnapshot(
+                    sharedElement,
+                    viewToGlobalMatrix,
+                    screenBounds
+                )
+            }
+
+            override fun onCreateSnapshotView(context: Context?, snapshot: Parcelable?): View {
+                Log.d("edison.to", "enter onCreateSnapshotView")
+                return super.onCreateSnapshotView(context, snapshot)
+            }
+
+            override fun onSharedElementsArrived(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                listener: OnSharedElementsReadyListener?
+            ) {
+                super.onSharedElementsArrived(sharedElementNames, sharedElements, listener)
+                Log.d("edison.to", "enter onSharedElementsArrived")
+            }
+        })
+    }
+
+    fun addExitSharedElementCallback() {
+        requireActivity().setExitSharedElementCallback(object : SharedElementCallback() {
+            override fun onSharedElementStart(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                super.onSharedElementStart(
+                    sharedElementNames,
+                    sharedElements,
+                    sharedElementSnapshots
+                )
+                Log.d("edison.to", "exit onSharedElementStart")
+            }
+
+            override fun onSharedElementEnd(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+                Log.d("edison.to", "exit onSharedElementEnd")
+            }
+
+            override fun onRejectSharedElements(rejectedSharedElements: MutableList<View>?) {
+                super.onRejectSharedElements(rejectedSharedElements)
+                Log.d("edison.to", "exit onRejectSharedElements")
+            }
+
+            override fun onMapSharedElements(
+                names: MutableList<String>?,
+                sharedElements: MutableMap<String, View>?
+            ) {
+                super.onMapSharedElements(names, sharedElements)
+                Log.d("edison.to", "exit onMapSharedElements")
+            }
+
+            override fun onCaptureSharedElementSnapshot(
+                sharedElement: View?,
+                viewToGlobalMatrix: Matrix?,
+                screenBounds: RectF?
+            ): Parcelable {
+                Log.d("edison.to", "exit onCaptureSharedElementSnapshot")
+                return super.onCaptureSharedElementSnapshot(
+                    sharedElement,
+                    viewToGlobalMatrix,
+                    screenBounds
+                )
+            }
+
+            override fun onCreateSnapshotView(context: Context?, snapshot: Parcelable?): View {
+                Log.d("edison.to", "exit onCreateSnapshotView")
+                return super.onCreateSnapshotView(context, snapshot)
+            }
+
+            override fun onSharedElementsArrived(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                listener: OnSharedElementsReadyListener?
+            ) {
+                super.onSharedElementsArrived(sharedElementNames, sharedElements, listener)
+                Log.d("edison.to", "exit onSharedElementsArrived")
             }
         })
     }
